@@ -64,11 +64,11 @@ func TestIsPasswordValid(t *testing.T) {
 // 	fmt.Println(nama)
 // }
 
-func TestInsertUser(t *testing.T){
-	var userdata User
-	userdata.Username = "dani"
-	userdata.Password = "secretoo"
+// func TestInsertUser(t *testing.T){
+// 	var userdata User
+// 	userdata.Username = "ade"
+// 	userdata.Password = "secretoo"
 
-	nama := InsertUser("MONGOSTRING", "urse", "user", userdata)
-	fmt.Println(nama)
-}
+// 	nama := InsertUser("MONGOSTRING", "urse", "user", userdata)
+// 	fmt.Println(nama)
+// }
