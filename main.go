@@ -40,24 +40,24 @@ func GCFReturnStruct(DataStuct any) string {
 	return string(jsondata)
 }
 
-func InsertUser(MONGOCONNSTRINGENV, dbname, collectionname string, userdata User) string {
-	mconn := SetConnection(MONGOCONNSTRINGENV, dbname)
-	hash, _ := HashPassword(userdata.Password)
-	userdata.Password = hash
-	atdb.InsertOneDoc(mconn, collectionname, userdata)
-	return "Ini username : " + userdata.Username + " ini password : " + userdata.Password
-}
-
-// func InsertUser(r *http.Request) string {
-// 	var Response Credential
-// 	var userdata User
-// 		err := json.NewDecoder(r.Body).Decode(&userdata)
-// 		if err != nil { 
-// 			Response.Message = "error parsing application/json: " + err.Error() 
-// 			return GCFReturnStruct(Response) 
-// 		}
+// func InsertUser(MONGOCONNSTRINGENV, dbname, collectionname string, userdata User) string {
+// 	mconn := SetConnection(MONGOCONNSTRINGENV, dbname)
 // 	hash, _ := HashPassword(userdata.Password)
 // 	userdata.Password = hash
-// 	atdb.InsertOneDoc(SetConnection("MONGOSTRING", "db_urse"), " user", userdata)
-// 	return "Ini username : " + userdata.Username + "ini password : " + userdata.Password
+// 	atdb.InsertOneDoc(mconn, collectionname, userdata)
+// 	return "Ini username : " + userdata.Username + " ini password : " + userdata.Password
 // }
+
+func InsertUser(r *http.Request) string {
+	var Response Credential
+	var userdata User
+		err := json.NewDecoder(r.Body).Decode(&userdata)
+		if err != nil { 
+			Response.Message = "error parsing application/json: " + err.Error() 
+			return GCFReturnStruct(Response) 
+		}
+	hash, _ := HashPassword(userdata.Password)
+	userdata.Password = hash
+	atdb.InsertOneDoc(SetConnection("MONGOSTRING", "db_urse"), " user", userdata)
+	return "Ini username : " + userdata.Username + "ini password : " + userdata.Password
+}
