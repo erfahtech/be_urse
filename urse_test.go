@@ -46,18 +46,29 @@ func TestHashFunction(t *testing.T) {
 func TestIsPasswordValid(t *testing.T) {
 	mconn := SetConnection("MONGOSTRING", "urse")
 	var userdata User
-	userdata.Username = "dito"
-	userdata.Password = "secrett"
+	userdata.Username = "dani"
+	userdata.Password = "secretoo"
 
 	anu := IsPasswordValid(mconn, "user", userdata)
 	fmt.Println(anu)
 }
 
 // func TestInsertUser(t *testing.T){
+// 	mconn := SetConnection("MONGOSTRING", "urse")
 // 	var userdata User
-// 	userdata.Username = "dito"
-// 	userdata.Password = "secretoo"
+// 	userdata.Username = "fatwa"
+// 	userdata.Password = "secretcuy"
+// 	userdata.Role = "admin"
 
-// 	nama := InsertUser("MONGOSTRING", "urse", "user", userdata)
+// 	nama := InsertUser(mconn, "user", userdata)
 // 	fmt.Println(nama)
 // }
+
+func TestInsertUser(t *testing.T){
+	var userdata User
+	userdata.Username = "dani"
+	userdata.Password = "secretoo"
+
+	nama := InsertUser("MONGOSTRING", "urse", "user", userdata)
+	fmt.Println(nama)
+}
