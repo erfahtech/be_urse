@@ -53,13 +53,12 @@ func TestIsPasswordValid(t *testing.T) {
 	fmt.Println(anu)
 }
 
-func TestInsertUser(t *testing.T){
-	mconn := SetConnection("MONGOSTRING", "urse")
-	var userdata User
-	userdata.Username = "dito"
-	userdata.Password = "secret"
-	userdata.Role = "admin"
+// func TestInsertUser(t *testing.T){
+// 	var userdata User
+// 	userdata.Username = "dito"
+// 	userdata.Password = "secret"
+// 	userdata.Role = "admin"
 
-	nama := InsertUser(mconn, "user", userdata)
-	fmt.Println(nama)
-}
+// 	nama := InsertUser("MONGOSTRING", "urse", "user", userdata)
+// 	fmt.Println(nama)
+// }

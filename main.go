@@ -7,7 +7,6 @@ import (
 
 	"github.com/aiteung/atdb"
 	"github.com/whatsauth/watoken"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func GCFPostHandler(PASETOPRIVATEKEYENV, MONGOCONNSTRINGENV, dbname, collectionname string, r *http.Request) string {
@@ -41,9 +40,24 @@ func GCFReturnStruct(DataStuct any) string {
 	return string(jsondata)
 }
 
-func InsertUser(db *mongo.Database, collection string, userdata User) string {
+// func InsertUser(MONGOCONNSTRINGENV, dbname, collectionname string, userdata User) string {
+// 	mconn := SetConnection(MONGOCONNSTRINGENV, dbname)
+// 	hash, _ := HashPassword(userdata.Password)
+// 	userdata.Password = hash
+// 	atdb.InsertOneDoc(mconn, collectionname, userdata)
+// 	return "Ini username : " + userdata.Username + " ini password : " + userdata.Password
+// }
+
+func InsertUser(r *http.Request) string {
+	var Response Credential
+	var userdata User
+		err := json.NewDecoder(r.Body).Decode(&userdata)
+		if err != nil { 
+			Response.Message = "error parsing application/json: " + err.Error() 
+			return GCFReturnStruct(Response) 
+		}
 	hash, _ := HashPassword(userdata.Password)
 	userdata.Password = hash
-	atdb.InsertOneDoc(db, collection, userdata)
+	atdb.InsertOneDoc(SetConnection("MONGOSTRING", "be_urse"), " user", userdata)
 	return "Ini username : " + userdata.Username + "ini password : " + userdata.Password
 }
