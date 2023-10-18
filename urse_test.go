@@ -66,9 +66,11 @@ func TestIsPasswordValid(t *testing.T) {
 
 // func TestInsertUser(t *testing.T){
 // 	var userdata User
+// 	userdata.Email = "test@gmail.com"
 // 	userdata.Username = "ade"
 // 	userdata.Password = "secretoo"
 
-// 	nama := InsertUser("MONGOSTRING", "urse", "user", userdata)
+// 	req, _ := http.NewRequest("GET", "/", nil)
+// 	nama := InsertUser(req)
 // 	fmt.Println(nama)
 // }

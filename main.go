@@ -24,7 +24,7 @@ func GCFPostHandler(PASETOPRIVATEKEYENV, MONGOCONNSTRINGENV, dbname, collectionn
 			if err != nil {
 				Response.Message = "Gagal Encode Token : " + err.Error()
 			} else {
-				Response.Message = "Selamat Datang"
+				Response.Message = "Selamat Datang" + datauser.Username
 				Response.Token = tokenstring
 			}
 		} else {
@@ -43,13 +43,15 @@ func GCFReturnStruct(DataStuct any) string {
 func InsertUser(r *http.Request) string {
 	var Response Credential
 	var userdata User
-		err := json.NewDecoder(r.Body).Decode(&userdata)
-		if err != nil { 
-			Response.Message = "error parsing application/json: " + err.Error() 
-			return GCFReturnStruct(Response) 
-		}
+	err := json.NewDecoder(r.Body).Decode(&userdata)
+	if err != nil {
+		Response.Message = "error parsing application/json: " + err.Error()
+		return GCFReturnStruct(Response)
+	}
 	hash, _ := HashPassword(userdata.Password)
 	userdata.Password = hash
-	atdb.InsertOneDoc(SetConnection("MONGOSTRING", "urse"), "user", userdata)
-	return "Ini username : " + userdata.Username + " ini password : " + userdata.Password
+	atdb.InsertOneDoc(SetConnection("MONGOSTRING", "db_urse"), "user", userdata)
+	Response.Status = true
+	Response.Message = "Akun berhasil dibuat untuk username: " + userdata.Username
+	return GCFReturnStruct(Response)
 }
