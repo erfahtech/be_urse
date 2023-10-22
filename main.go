@@ -9,6 +9,11 @@ import (
 	"github.com/whatsauth/watoken"
 )
 
+func GCFReturnStruct(DataStuct any) string {
+	jsondata, _ := json.Marshal(DataStuct)
+	return string(jsondata)
+}
+
 func GCFPostHandler(PASETOPRIVATEKEYENV, MONGOCONNSTRINGENV, dbname, collectionname string, r *http.Request) string {
 	var Response Credential
 	Response.Status = false
@@ -28,17 +33,13 @@ func GCFPostHandler(PASETOPRIVATEKEYENV, MONGOCONNSTRINGENV, dbname, collectionn
 				Response.Token = tokenstring
 			}
 		} else {
-			Response.Message = "Password Salah"
+			Response.Message = "Email atau Password Salah"
 		}
 	}
 
 	return GCFReturnStruct(Response)
 }
 
-func GCFReturnStruct(DataStuct any) string {
-	jsondata, _ := json.Marshal(DataStuct)
-	return string(jsondata)
-}
 
 func InsertUser(r *http.Request) string {
 	var Response Credential
@@ -50,8 +51,31 @@ func InsertUser(r *http.Request) string {
 	}
 	hash, _ := HashPassword(userdata.Password)
 	userdata.Password = hash
-	atdb.InsertOneDoc(SetConnection("MONGOSTRING", "db_urse"), "user", userdata)
+	atdb.InsertOneDoc(SetConnection("MONGOSTRING", "urse"), "db_user", userdata)
 	Response.Status = true
 	Response.Message = "Akun berhasil dibuat untuk username: " + userdata.Username
 	return GCFReturnStruct(Response)
+}
+
+func signUpUser(MONGOCONNSTRINGENV, dbname, collectionname string, r *http.Request) (string, error) {
+    var Response Credential
+    var userdata User
+	err := json.NewDecoder(r.Body).Decode(&userdata)
+	if err != nil {
+		Response.Message = "error parsing application/json: "
+		return GCFReturnStruct(Response), err
+	}
+	hash, err := HashPassword(userdata.Password)
+	if err != nil {
+		Response.Message = "error hashing password: " 
+		return GCFReturnStruct(Response), err
+	}
+	userdata.Password = hash
+	if err := atdb.InsertOneDoc(SetConnection(MONGOCONNSTRINGENV, dbname), collectionname, userdata); err != nil {
+		Response.Message = "error inserting user data: "
+		return GCFReturnStruct(Response), err.(error)
+	}
+		Response.Status = true
+		Response.Message = "Akun berhasil dibuat untuk username: " + userdata.Username
+		return GCFReturnStruct(Response), nil
 }

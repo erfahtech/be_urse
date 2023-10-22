@@ -2,6 +2,7 @@ package beurse
 
 import (
 	"fmt"
+	"net/http"
 	"testing"
 
 	"github.com/aiteung/atdb"
@@ -64,13 +65,14 @@ func TestIsPasswordValid(t *testing.T) {
 // 	fmt.Println(nama)
 // }
 
-// func TestInsertUser(t *testing.T){
-// 	var userdata User
-// 	userdata.Email = "test@gmail.com"
-// 	userdata.Username = "ade"
-// 	userdata.Password = "secretoo"
+func TestInsertUser(t *testing.T){
+	var userdata User
+	userdata.Email = "test@gmail.com"
+	userdata.Username = "ade"
+	userdata.Password = "secretoo"
 
-// 	req, _ := http.NewRequest("GET", "/", nil)
-// 	nama := InsertUser(req)
-// 	fmt.Println(nama)
-// }
+	req, _ := http.NewRequest("GET", "/", nil)
+	nama, _ := signUpUser("MONGOSTRING", "urse", "db_user", req)
+	fmt.Println(nama)
+}
+
