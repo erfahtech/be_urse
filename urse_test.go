@@ -72,7 +72,7 @@ func TestInsertUser(t *testing.T){
 	userdata.Password = "secretoo"
 
 	req, _ := http.NewRequest("GET", "/", nil)
-	nama, _ := signUpUser("MONGOSTRING", "urse", "db_user", req)
+	nama, _ := SignUpUser("MONGOSTRING", "urse", "db_user", req)
 	fmt.Println(nama)
 }
 

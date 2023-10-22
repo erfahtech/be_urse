@@ -57,7 +57,7 @@ func InsertUser(r *http.Request) string {
 	return GCFReturnStruct(Response)
 }
 
-func signUpUser(MONGOCONNSTRINGENV, dbname, collectionname string, r *http.Request) (string, error) {
+func SignUpUser(MONGOCONNSTRINGENV, dbname, collectionname string, r *http.Request) (string, error) {
     var Response Credential
     var userdata User
 	err := json.NewDecoder(r.Body).Decode(&userdata)
