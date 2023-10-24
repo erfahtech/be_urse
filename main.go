@@ -58,7 +58,7 @@ func InsertUser(r *http.Request) string {
 	return GCFReturnStruct(Response)
 }
 
-func InsertDevice(r *http.Request) string {
+func InsertDevice(PASETOPRIVATEKEYENV ,r *http.Request) string {
 	var Response Credential
 	var devicedata Device
 	var datauser User
