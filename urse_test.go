@@ -68,10 +68,10 @@ func TestInsertUser(*testing.T){
 func TestInsertDevice(*testing.T){
 	var devicedata Device
 	mconn := SetConnection("MONGOSTRING", "db_urse")
-	token,_:=watoken.Decode("c49482e6de1fa07a349f354c2277e11bc7115297a40a1c09c52ef77b905d07c4","v4.public.eyJleHAiOiIyMDIzLTEwLTI0VDAzOjA0OjAwWiIsImlhdCI6IjIwMjMtMTAtMjRUMDE6MDQ6MDBaIiwiaWQiOiJkaXRvQGdtYWlsLmNvbSIsIm5iZiI6IjIwMjMtMTAtMjRUMDE6MDQ6MDBaIn12v9LVBJuhTryiZb5UYkObOQwsTllVPesLK0sOqamdNMB8xiSQGPLiAlY3yMTspuTaCLJ_v2azQQLYmw3YBrMC")
-	devicedata.Name = "dito"
-	devicedata.Topic = "dito"
-	devicedata.Email = token.Id
+	token,_:=watoken.Decode("c49482e6de1fa07a349f354c2277e11bc7115297a40a1c09c52ef77b905d07c4","v4.public.eyJleHAiOiIyMDIzLTEwLTI0VDEwOjI3OjI2WiIsImlhdCI6IjIwMjMtMTAtMjRUMDg6Mjc6MjZaIiwiaWQiOiJlcmZhaEBnbWFpbC5jb20iLCJuYmYiOiIyMDIzLTEwLTI0VDA4OjI3OjI2WiJ98pBh-mjEoJlp-4vOVFrfzBcFZzzVsavflcv-wQWfGAVNDGL3A4ebwfNwzG91OnRWHDLbM17VghkQa578tLMhAg")
+	devicedata.Name = "Lampu"
+	devicedata.Topic = "test/lampu"
+	devicedata.User = token.Id
 	nama:=atdb.InsertOneDoc(mconn, "devices", devicedata)
 	fmt.Println(nama)
 }

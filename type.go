@@ -1,8 +1,11 @@
 package beurse
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import (
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 type User struct {
+	ID    primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	Username string `json:"username" bson:"username"`
 	Password string `json:"password" bson:"password"`
 	Email    string `json:"Email" bson:"email"`
@@ -12,7 +15,7 @@ type Device struct {
 	ID    primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	Name  string             `json:"name" bson:"name"`
 	Topic string             `json:"topic" bson:"topic"`
-	Email string             `json:"email" bson:"email"`
+	User string             `json:"user" bson:"user"`
 }
 
 type Credential struct {
@@ -20,3 +23,10 @@ type Credential struct {
 	Token   string `json:"token,omitempty" bson:"token,omitempty"`
 	Message string `json:"message,omitempty" bson:"message,omitempty"`
 }
+
+// type Payload struct {
+// 	Id  string    `json:"id"`
+// 	Exp time.Time `json:"exp"`
+// 	Iat time.Time `json:"iat"`
+// 	Nbf time.Time `json:"nbf"`
+// }
