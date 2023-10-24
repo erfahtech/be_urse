@@ -61,11 +61,20 @@ func InsertUser(r *http.Request) string {
 func InsertDevice(r *http.Request) string {
 	var Response Credential
 	var devicedata Device
+	var datauser User
 	err := json.NewDecoder(r.Body).Decode(&devicedata)
 	if err != nil {
 		Response.Message = "error parsing application/json: " + err.Error()
 		return GCFReturnStruct(Response)
 	}
+
+	tokenString, err := watoken.Decode(datauser.Email, os.Getenv("PASETOPRIVATEKEYENV"))
+	    if err != nil {
+        Response.Message = "Error decoding token: " + err.Error()
+        return GCFReturnStruct(Response)
+    }
+
+	devicedata.Email = tokenString.Id
 	devicedata.ID = primitive.NewObjectID() // generate new ObjectID for device
 	mconn := SetConnection("MONGOSTRING", "db_urse")
 	atdb.InsertOneDoc(mconn, "devices", devicedata)
@@ -73,3 +82,5 @@ func InsertDevice(r *http.Request) string {
 	Response.Message = "Device berhasil ditambahkan dengan nama: " + devicedata.Name
 	return GCFReturnStruct(Response)
 }
+
+

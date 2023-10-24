@@ -53,27 +53,29 @@ func TestIsPasswordValid(t *testing.T) {
 	fmt.Println(anu)
 }
 
-// func TestInsertUser(t *testing.T){
-// 	mconn := SetConnection("MONGOSTRING", "urse")
-// 	var userdata User
-// 	userdata.Username = "fatwa"
-// 	userdata.Password = "secretcuy"
-// 	userdata.Role = "admin"
+func TestInsertUser(*testing.T){
+	var userdata User 
+	mconn := SetConnection("MONGOSTRING", "db_urse")
+	userdata.Username = "fatwa"
+	userdata.Password = "secretcuy"
 
-// 	nama := InsertUser(mconn, "user", userdata)
-// 	fmt.Println(nama)
-// }
+	hash, _ := HashPassword(userdata.Password)
+	userdata.Password = hash
+	nama:=atdb.InsertOneDoc(mconn, "user", userdata)
+	fmt.Println(nama)
+}
 
-// func TestInsertUser(t *testing.T){
-// 	var userdata User
-// 	userdata.Email = "test@gmail.com"
-// 	userdata.Username = "ade"
-// 	userdata.Password = "secretoo"
+func TestInsertDevice(*testing.T){
+	var devicedata Device
+	mconn := SetConnection("MONGOSTRING", "db_urse")
+	token,_:=watoken.Decode("c49482e6de1fa07a349f354c2277e11bc7115297a40a1c09c52ef77b905d07c4","v4.public.eyJleHAiOiIyMDIzLTEwLTI0VDAzOjA0OjAwWiIsImlhdCI6IjIwMjMtMTAtMjRUMDE6MDQ6MDBaIiwiaWQiOiJkaXRvQGdtYWlsLmNvbSIsIm5iZiI6IjIwMjMtMTAtMjRUMDE6MDQ6MDBaIn12v9LVBJuhTryiZb5UYkObOQwsTllVPesLK0sOqamdNMB8xiSQGPLiAlY3yMTspuTaCLJ_v2azQQLYmw3YBrMC")
+	devicedata.Name = "dito"
+	devicedata.Topic = "dito"
+	devicedata.Email = token.Id
+	nama:=atdb.InsertOneDoc(mconn, "devices", devicedata)
+	fmt.Println(nama)
+}
 
-// 	req, _ := http.NewRequest("GET", "/", nil)
-// 	nama, _ := SignUpUser("MONGOSTRING", "urse", "db_user", req)
-// 	fmt.Println(nama)
-// }
 
 
 

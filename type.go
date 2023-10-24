@@ -12,6 +12,7 @@ type Device struct {
 	ID    primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	Name  string             `json:"name" bson:"name"`
 	Topic string             `json:"topic" bson:"topic"`
+	Email string             `json:"email" bson:"email"`
 }
 
 type Credential struct {
