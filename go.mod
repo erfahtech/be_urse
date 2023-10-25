@@ -1,4 +1,4 @@
-module github.com/erfahtech/be_urse
+module github.com/erfahtech/be_erfahtech
 
 go 1.21.2
 
